@@ -1,4 +1,4 @@
 export default {
   token: process.env.TEMPO_TOKEN || '',
-  url: 'https://api.tempo.io/core/3/',
+  url: process.env.TEMPO_URL || 'https://api.tempo.io/core/3/',
 };

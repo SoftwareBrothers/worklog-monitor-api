@@ -1,50 +1,30 @@
 import { BadRequestException, HttpService, Injectable } from '@nestjs/common';
-import * as moment from 'moment';
 
-type WorklogItem = {
-  author: {
-    accountId: string;
-    displayName: string;
-  }
-  timeSpentSeconds: number;
-};
+import DateTimeUtils from '../utils/DateTimeUtils';
 
-type WorklogResult = {
-  self: string;
-  metadata: {
-    count: number;
-    offset: number;
-    limit: number;
-    next: string;
-  }
-  results: WorklogItem[];
-};
-
-type ResultMap = {
-  [accountId: string]: WorklogItem[]
-};
-
-const MAX_LIMIT = 1000;
-
-const getDateString = (date: Date) => moment.default(date).format('YYYY-MM-DD');
+import { WorklogItem } from './interfaces/WorklogItem.interface';
+import { WorklogResult } from './interfaces/WorklogResult.interface';
+import { AccountIdToWorklogItemsMap } from './interfaces/AccountIdToWorklogItemsMap';
+import { WorklogInput } from './interfaces/WorklogInput.interface';
 
 @Injectable()
 export class TempoService {
   constructor(private readonly http: HttpService) {}
 
-  private async worklogs({ from, to }: { from: string, to: string }): Promise<WorklogItem[]> {
-    try {
-      return this.http
-        .get<WorklogResult>('worklogs', { params: { from, to, limit: MAX_LIMIT } })
-        .toPromise()
-        .then(result => result.data.results);
-    } catch (e) {
-      throw new BadRequestException('tempo thrown error', e.message);
-    }
+  private readonly MAX_LIMIT = 1000;
+
+  private async worklogs({ from, to }: WorklogInput): Promise<WorklogItem[]> {
+    return this.http
+      .get<WorklogResult>('worklogs', { params: { from, to, limit: this.MAX_LIMIT } })
+      .toPromise()
+      .then(result => result.data.results)
+      .catch((err) => {
+        throw new BadRequestException('tempo thrown error', err.message);
+      });
   }
 
-  public async worklogsForDate(date: Date): Promise<ResultMap> {
-    const dateString = getDateString(date);
+  public async worklogsForDate(date: Date): Promise<AccountIdToWorklogItemsMap> {
+    const dateString = DateTimeUtils.getDateString(date);
     const worklogs = await this.worklogs({ from: dateString, to: dateString });
 
     return worklogs.reduce((result, worklogItem) => {
