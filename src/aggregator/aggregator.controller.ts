@@ -7,7 +7,7 @@ import { UserWorklogResult } from './interfaces/user-worklog-result.interface';
 export class AggregatorController {
   constructor(private readonly aggregatorService: AggregatorService) {}
 
-  @Get()
+  @Get('worklogs')
   public async aggregate(@Query() date: Date): Promise<UserWorklogResult[]> {
     return this.aggregatorService.aggregate(date);
   }
