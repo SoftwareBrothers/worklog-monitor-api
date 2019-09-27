@@ -7,6 +7,8 @@ import { AppController } from './app.controller';
 import { MappedUsersModule } from './mapped-users/mapped-users.module';
 import { TempoModule } from './tempo/tempo.module';
 import { CalamariModule } from './calamari/calamari.module';
+import { AggregatorService } from './aggregator/aggregator.service';
+import { AggregatorModule } from './aggregator/aggregator.module';
 
 @Module({
   imports: [
@@ -14,8 +16,9 @@ import { CalamariModule } from './calamari/calamari.module';
     MappedUsersModule,
     TempoModule,
     CalamariModule,
+    AggregatorModule,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [AggregatorService],
 })
 export class AppModule { }
