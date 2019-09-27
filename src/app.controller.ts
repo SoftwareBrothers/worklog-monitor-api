@@ -5,7 +5,7 @@ export class AppController {
   @Get()
   public healthCheck() {
     return {
-      status: 'ok',
+      status: 'okey',
     };
   }
 }

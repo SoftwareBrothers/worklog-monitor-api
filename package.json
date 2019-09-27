@@ -31,6 +31,7 @@
     "eslint-plugin-react": "^7.14.3",
     "fs": "^0.0.1-security",
     "jsonfile": "^5.0.0",
+    "moment": "^2.24.0",
     "nestjs-config": "^1.4.4",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
