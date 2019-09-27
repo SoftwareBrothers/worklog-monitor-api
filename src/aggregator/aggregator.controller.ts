@@ -1,13 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 
 import { AggregatorService } from './aggregator.service';
+import { UserWorklogResult } from './interfaces/user-worklog-result.interface';
 
 @Controller('aggregator')
 export class AggregatorController {
   constructor(private readonly aggregatorService: AggregatorService) {}
 
   @Get()
-  public async aggregate() {
-    return this.aggregatorService.aggregate();
+  public async aggregate(@Query() date: Date): Promise<UserWorklogResult[]> {
+    return this.aggregatorService.aggregate(date);
   }
 }

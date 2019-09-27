@@ -8,7 +8,7 @@ import { MappedUsersModule } from './mapped-users/mapped-users.module';
 import { TempoModule } from './tempo/tempo.module';
 import { CalamariModule } from './calamari/calamari.module';
 import { AggregatorService } from './aggregator/aggregator.service';
-import { AggregatorModule, AggregatorModule } from './aggregator/aggregator.module';
+import { AggregatorModule } from './aggregator/aggregator.module';
 
 @Module({
   imports: [
