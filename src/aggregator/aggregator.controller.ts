@@ -8,7 +8,7 @@ export class AggregatorController {
   constructor(private readonly aggregatorService: AggregatorService) {}
 
   @Get('worklogs')
-  public async aggregate(@Query() date: Date): Promise<UserWorklogResult[]> {
-    return this.aggregatorService.aggregate(date);
+  public async aggregate(@Query('date') date: string): Promise<UserWorklogResult[]> {
+    return this.aggregatorService.aggregate(new Date(date));
   }
 }
