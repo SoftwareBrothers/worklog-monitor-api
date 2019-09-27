@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { WebAPICallResult, WebClient } from '@slack/web-api';
+import { ConfigService } from 'nestjs-config';
 
 @Injectable()
 export class SlackService {
@@ -7,9 +8,11 @@ export class SlackService {
 
   private readonly channel: string;
 
-  constructor() {
-    this.webClient = new WebClient(process.env.SLACK_API_TOKEN);
-    this.channel = process.env.SLACK_NOTIFICATIONS_CHANNEL;
+  constructor(
+    private readonly configService: ConfigService,
+  ) {
+    this.webClient = new WebClient(configService.get('slack.apiToken'));
+    this.channel = configService.get('slack.channel');
   }
 
   public async sendToChannel(message: string, channel = null): Promise<WebAPICallResult> {
