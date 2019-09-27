@@ -3,6 +3,7 @@ import * as path from 'path';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from 'nestjs-config';
 
+import { NotificationsModule } from './notifications/notifications.module';
 import { AppController } from './app.controller';
 import { MappedUsersModule } from './mapped-users/mapped-users.module';
 import { TempoModule } from './tempo/tempo.module';
@@ -18,6 +19,7 @@ import { AuthModule } from './auth/auth.module';
     TempoModule,
     CalamariModule,
     AggregatorModule,
+    NotificationsModule,
     AuthModule,
   ],
   controllers: [AppController],
