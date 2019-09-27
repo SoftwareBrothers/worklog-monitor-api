@@ -27,7 +27,7 @@ export class NotificationsService {
       month: 'long',
       day: 'numeric',
     });
-    const message = `:warning: Brakujące work logi za *${dateString}*: \n${workLogResults
+    const message = `:alert: Brakujące work logi za *${dateString}* :alert: \n\n${workLogResults
       .map(result => [`:pisiorek: ${result.firstName} ${result.lastName}`])
       .join('\n')}`;
 
