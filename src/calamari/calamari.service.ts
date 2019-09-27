@@ -1,36 +1,26 @@
 import { BadRequestException, HttpService, Injectable } from '@nestjs/common';
-import * as moment from 'moment';
+import moment from 'moment';
 
-type Person = {
-  firstName: string;
-  lastName: string;
-  email: string;
-};
+import DateTimeUtils from '../utils/DateTimeUtils';
 
-type Author = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  externalId: string;
-};
-
-type TimeSheetEntry = {
-  id: number;
-  started: Date;
-  person: Author;
-};
-
-const getDateString = (date: Date) => moment.default(date).format('YYYY-MM-DD');
-
-const getPersonObject: (Author) => (Person) = ({ firstName, lastName, email }) => ({
-  firstName, lastName, email,
-});
+import { TimeSheetEntryAuthor } from './interfaces/TimeSheetEntryAuthor.interface';
+import { TimeSheetEntry } from './interfaces/TimeSheetEntry.interface';
+import { TimeSheetEntriesInput } from './interfaces/TimeSheetEntriesInput';
+import { Person } from './interfaces/Person.interface';
 
 @Injectable()
 export class CalamariService {
   constructor(private readonly http: HttpService) {}
 
-  public async timesheetEntries({ from, to }: { from: string, to: string }): Promise<TimeSheetEntry[]> {
+  private getPersonObject(author: TimeSheetEntryAuthor): Person {
+    return {
+      firstName: author.firstName,
+      lastName: author.lastName,
+      email: author.email,
+    };
+  }
+
+  private async timesheetEntries({ from, to }: TimeSheetEntriesInput): Promise<TimeSheetEntry[]> {
     return this.http
       .post('clockin/timesheetentries/v1/find', { from, to })
       .toPromise()
@@ -41,9 +31,9 @@ export class CalamariService {
   }
 
   public async presentPeople(date: Date): Promise<Person[]> {
-    const dateString = getDateString(date);
+    const dateString = DateTimeUtils.getDateString(date);
     const timeSheetEntries = await this.timesheetEntries({ from: dateString, to: dateString });
-    const getIsCorrectDay = (startTime) => moment.default(startTime).isSame(date, 'day');
+    const getIsCorrectDay = (startTime) => moment(startTime).isSame(date, 'day');
 
     return timeSheetEntries.reduce((presentPeople, timeSheetEntry) => {
       // Calamari API returns all timesheet entries for requested date(s)
@@ -52,7 +42,7 @@ export class CalamariService {
 
       if (!getIsCorrectDay(timeSheetEntry.started) || getIsInResults()) return presentPeople;
 
-      return [...presentPeople, getPersonObject(timeSheetEntry.person)];
+      return [...presentPeople, this.getPersonObject(timeSheetEntry.person)];
     }, []);
   }
 }
