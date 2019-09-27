@@ -4,6 +4,8 @@
 
 1. Copy example env `cp .env.dist .env`
 2. Populate with your own values
+3. Copy users-dictionary `cp users-dictionary.json.example users-dictionary.json`
+4. Populate with data
 
 ### Use the makefile to run the application locally
 
