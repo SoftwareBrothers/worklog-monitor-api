@@ -11,5 +11,6 @@ import { AggregatorController } from './aggregator.controller';
   imports: [TempoModule, CalamariModule, MappedUsersModule],
   providers: [AggregatorService],
   controllers: [AggregatorController],
+  exports: [AggregatorService],
 })
 export class AggregatorModule {}
