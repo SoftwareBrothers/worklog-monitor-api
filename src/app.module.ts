@@ -10,6 +10,7 @@ import { TempoModule } from './tempo/tempo.module';
 import { CalamariModule } from './calamari/calamari.module';
 import { AggregatorService } from './aggregator/aggregator.service';
 import { AggregatorModule } from './aggregator/aggregator.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AggregatorModule } from './aggregator/aggregator.module';
     CalamariModule,
     AggregatorModule,
     NotificationsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AggregatorService],
