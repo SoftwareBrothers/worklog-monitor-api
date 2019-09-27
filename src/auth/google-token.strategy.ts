@@ -16,7 +16,7 @@ export class GoogleTokenStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  public async validate(_token: string, _refreshToken: Nullable<string>, user: GoogleUser) {
+  public async validate(_token: string, _refreshToken: Nullable<string>, user: GoogleUser): Promise<GoogleUser> {
     return user;
   }
 }
