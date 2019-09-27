@@ -74,7 +74,9 @@ export class CalamariService {
 
     const isHoliday = this.isHoliday(previousBussinessDay);
 
-    if (isHoliday) return this.previousWorkingDay(previousBussinessDay);
+    if (isHoliday) {
+      return this.previousWorkingDay(previousBussinessDay);
+    }
 
     return previousBussinessDay;
   }
