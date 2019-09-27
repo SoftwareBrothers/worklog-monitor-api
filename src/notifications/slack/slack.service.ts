@@ -19,7 +19,6 @@ export class SlackService {
         text: message,
       });
     } catch (e) {
-      console.error(e);
       throw new BadRequestException(`Unable to post a message to channel ${channel}`);
     }
   }
@@ -32,7 +31,6 @@ export class SlackService {
       });
       user = userResponse.user;
     } catch (e) {
-      console.error(e);
       throw new BadRequestException(`Unable to lookup user by email '${email}'`);
     }
 
@@ -42,7 +40,6 @@ export class SlackService {
         text: message,
       });
     } catch (e) {
-      console.error(e);
       throw new BadRequestException(`Unable to post a message to ${email}`);
     }
   }

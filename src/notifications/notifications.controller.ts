@@ -19,9 +19,7 @@ export class NotificationsController {
     const users: UserWorklogResult[] = await this.aggregatorService.aggregate(lastWorkingDate);
     const lazyUsers = users.filter(user => !user.worklogs.length);
 
-    for (const workLogResult of lazyUsers) {
-      this.notificationsService.sendToUser(workLogResult, lastWorkingDate);
-    }
+    lazyUsers.forEach(workLogResult => this.notificationsService.sendToUser(workLogResult, lastWorkingDate));
   }
 
   @Post('/slack/to-channel')
