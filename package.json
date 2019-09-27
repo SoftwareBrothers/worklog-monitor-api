@@ -20,6 +20,7 @@
   "dependencies": {
     "@nestjs/common": "^6.7.2",
     "@nestjs/core": "^6.7.2",
+    "@nestjs/passport": "^6.1.0",
     "@nestjs/platform-express": "^6.7.2",
     "@nestjs/swagger": "^3.1.0",
     "@typescript-eslint/eslint-plugin": "^2.3.1",
@@ -33,6 +34,8 @@
     "jsonfile": "^5.0.0",
     "moment": "^2.24.0",
     "nestjs-config": "^1.4.4",
+    "passport": "^0.4.0",
+    "passport-google-token": "^0.1.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
