@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from 'nestjs-config';
 
 import { UserWorklogResult } from '../aggregator/interfaces/user-worklog-result.interface';
 
@@ -6,7 +7,10 @@ import { SlackService } from './slack/slack.service';
 
 @Injectable()
 export class NotificationsService {
-  constructor(private readonly slackService: SlackService) {
+  constructor(
+    private readonly slackService: SlackService,
+    private readonly config: ConfigService,
+  ) {
   }
 
   public sendToUser(workLogResult: UserWorklogResult, date: Date) {
@@ -31,6 +35,6 @@ export class NotificationsService {
       .map(result => [`:pisiorek: ${result.firstName} ${result.lastName}`])
       .join('\n')}`;
 
-    return this.slackService.sendToChannel(message, 'worklog-monitor-int');
+    return this.slackService.sendToChannel(message, this.config.get('slack.channel'));
   }
 }
